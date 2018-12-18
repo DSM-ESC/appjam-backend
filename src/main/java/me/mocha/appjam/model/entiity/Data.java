@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "data")
@@ -36,14 +35,14 @@ public class Data {
     private Integer temperature;
 
     @Getter
-    private LocalDateTime dateTime;
+    private Long unixTime;
 
     @Builder
-    public Data(int dust, int humidity, int temperature, LocalDateTime dateTime) {
+    public Data(int dust, int humidity, int temperature, long unixTime) {
         this.dust = dust;
         this.humidity = humidity;
         this.temperature = temperature;
-        this.dateTime = dateTime;
+        this.unixTime = unixTime;
     }
 
 }
