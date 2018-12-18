@@ -26,6 +26,21 @@ public class DataController {
         return dataRepository.findAll();
     }
 
+    @GetMapping("/recent")
+    public Data getRecentData() {
+        Data recent = null;
+        for (Data data : dataRepository.findAll()) {
+            if (recent == null) {
+                recent = data;
+            } else {
+                if (recent.getUnixTime() < data.getUnixTime()) {
+                    recent = data;
+                }
+            }
+        }
+        return recent;
+    }
+
     @PostMapping
     public void saveData(@RequestBody SaveDataRequest request) {
         dataRepository.save(Data.builder()
