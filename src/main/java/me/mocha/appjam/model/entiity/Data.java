@@ -2,6 +2,7 @@ package me.mocha.appjam.model.entiity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "data")
+@NoArgsConstructor
 public class Data {
 
     @Getter
@@ -35,14 +37,40 @@ public class Data {
     private Integer temperature;
 
     @Getter
-    private Long unixTime;
+    @Min(2018)
+    @Max(2300)
+    private Integer year;
+
+    @Getter
+    @Min(1)
+    @Max(12)
+    private Integer month;
+
+    @Getter
+    @Min(1)
+    @Max(31)
+    private Integer day;
+
+    @Getter
+    @Min(0)
+    @Max(23)
+    private Integer hour;
+
+    @Getter
+    @Min(0)
+    @Max(59)
+    private Integer minute;
 
     @Builder
-    public Data(int dust, int humidity, int temperature, long unixTime) {
+    public Data(int dust, int humidity, int temperature, int year, int month, int day, int hour, int minute) {
         this.dust = dust;
         this.humidity = humidity;
         this.temperature = temperature;
-        this.unixTime = unixTime;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.hour = hour;
+        this.minute = minute;
     }
 
 }

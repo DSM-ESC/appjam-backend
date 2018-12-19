@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class SaveDataRequest {
 
     @NotNull
@@ -26,7 +27,33 @@ public class SaveDataRequest {
     private Integer temperature;
 
     @NotNull
+    @Getter
+    @Min(2018)
+    @Max(2300)
+    private Integer year;
+
+    @NotNull
+    @Getter
+    @Min(1)
+    @Max(12)
+    private Integer month;
+
+    @NotNull
+    @Getter
+    @Min(1)
+    @Max(31)
+    private Integer day;
+
+    @NotNull
+    @Getter
     @Min(0)
-    private Long unixTime;
+    @Max(23)
+    private Integer hour;
+
+    @NotNull
+    @Getter
+    @Min(0)
+    @Max(59)
+    private Integer minute;
 
 }

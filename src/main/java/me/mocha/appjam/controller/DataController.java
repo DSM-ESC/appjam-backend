@@ -5,11 +5,10 @@ import me.mocha.appjam.model.repository.DataRepository;
 import me.mocha.appjam.payload.request.data.SaveDataRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/data")
@@ -33,7 +32,10 @@ public class DataController {
             if (recent == null) {
                 recent = data;
             } else {
-                if (recent.getUnixTime() < data.getUnixTime()) {
+                LocalDateTime rDate = LocalDateTime.of(recent.getYear(), recent.getMonth(), recent.getDay(), recent.getHour(), recent.getMinute());
+                LocalDateTime dDate = LocalDateTime.of(data.getYear(), data.getMonth(), data.getDay(), data.getHour(), data.getMinute());
+
+                if (rDate.isBefore(dDate)) {
                     recent = data;
                 }
             }
@@ -47,32 +49,45 @@ public class DataController {
                 .dust(request.getDust())
                 .humidity(request.getHumidity())
                 .temperature(request.getTemperature())
-                .unixTime(request.getUnixTime())
+                .year(request.getYear())
+                .month(request.getMonth())
+                .day(request.getDay())
+                .hour(request.getHour())
+                .minute(request.getMinute())
                 .build());
     }
 
     @GetMapping("/{year}")
-    public List<Data> getYearData(@PathVariable("year") int year) {
-        return dataRepository.findAll().stream().filter(data -> {
-            LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(data.getUnixTime()), ZoneId.systemDefault());
-            return dateTime.getYear() == year;
-        }).collect(Collectors.toList());
+    public Map<Integer, List<Data>> getYearData(@PathVariable("year") int year) {
+        Map<Integer, List<Data>> result = new HashMap<>();
+        dataRepository.findAllByYear(year).forEach(d -> {
+            List<Data> tmp = result.get(d.getMonth());
+            tmp.add(d);
+            result.put(d.getMonth(), tmp);
+        });
+        return result;
     }
 
     @GetMapping("/{year}/{month}")
-    public List<Data> getMonthData(@PathVariable("year") int year, @PathVariable("month") int month) {
-        return dataRepository.findAll().stream().filter(data -> {
-            LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(data.getUnixTime()), ZoneId.systemDefault());
-            return dateTime.getYear() == year && dateTime.getMonthValue() == month;
-        }).collect(Collectors.toList());
+    public Map<Integer, List<Data>> getMonthData(@PathVariable("year") int year, @PathVariable("month") int month) {
+        Map<Integer, List<Data>> result = new HashMap<>();
+        dataRepository.findAllByYearAndMonth(year, month).forEach(d -> {
+            List<Data> tmp = result.get(d.getDay());
+            tmp.add(d);
+            result.put(d.getDay(), tmp);
+        });
+        return result;
     }
 
     @GetMapping("/{year}/{month}/{day}")
-    public List<Data> getDayData(@PathVariable("year") int year, @PathVariable("month") int month, @PathVariable("day") int day) {
-        return dataRepository.findAll().stream().filter(data -> {
-            LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(data.getUnixTime()), ZoneId.systemDefault());
-            return dateTime.getYear() == year && dateTime.getMonthValue() == month && dateTime.getDayOfMonth() == day;
-        }).collect(Collectors.toList());
+    public Map<Integer, List<Data>> getDayData(@PathVariable("year") int year, @PathVariable("month") int month, @PathVariable("day") int day) {
+        Map<Integer, List<Data>> result = new HashMap<>();
+        dataRepository.findAllByYearAndMonthAndDay(year, month, day).forEach(d -> {
+            List<Data> tmp = result.get(d.getHour());
+            tmp.add(d);
+            result.put(d.getHour(), tmp);
+        });
+        return result;
     }
 
 }
