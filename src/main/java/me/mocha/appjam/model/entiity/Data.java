@@ -1,9 +1,6 @@
 package me.mocha.appjam.model.entiity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -11,7 +8,7 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "data")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Data {
 
     @Getter

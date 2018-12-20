@@ -6,6 +6,7 @@ import me.mocha.appjam.payload.request.data.SaveDataRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,9 @@ public class DataController {
         Map<Integer, List<Data>> result = new HashMap<>();
         dataRepository.findAllByYear(year).forEach(d -> {
             List<Data> tmp = result.get(d.getMonth());
+            if (tmp == null) {
+                tmp = new ArrayList<>();
+            }
             tmp.add(d);
             result.put(d.getMonth(), tmp);
         });
@@ -73,6 +77,9 @@ public class DataController {
         Map<Integer, List<Data>> result = new HashMap<>();
         dataRepository.findAllByYearAndMonth(year, month).forEach(d -> {
             List<Data> tmp = result.get(d.getDay());
+            if (tmp == null) {
+                tmp = new ArrayList<>();
+            }
             tmp.add(d);
             result.put(d.getDay(), tmp);
         });
@@ -84,6 +91,9 @@ public class DataController {
         Map<Integer, List<Data>> result = new HashMap<>();
         dataRepository.findAllByYearAndMonthAndDay(year, month, day).forEach(d -> {
             List<Data> tmp = result.get(d.getHour());
+            if (tmp == null) {
+                tmp = new ArrayList<>();
+            }
             tmp.add(d);
             result.put(d.getHour(), tmp);
         });
