@@ -5,7 +5,7 @@ appjam 백엔드
 
 ### language
 
-- java
+- java8
 
 ### Build tool
 
@@ -25,8 +25,7 @@ appjam 백엔드
 
 ### API docs
 
-- Rest docs
-- Slate
+- Swagger
 
 ### WAS
 

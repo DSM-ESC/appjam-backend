@@ -1,6 +1,5 @@
 package me.mocha.appjam.security.jwt;
 
-import io.jsonwebtoken.JwtException;
 import me.mocha.appjam.exception.NotFoundException;
 import me.mocha.appjam.exception.UnprocessableEntityException;
 import me.mocha.appjam.model.repository.UserRepository;

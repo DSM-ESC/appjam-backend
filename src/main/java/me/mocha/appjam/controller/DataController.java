@@ -1,6 +1,10 @@
 package me.mocha.appjam.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import me.mocha.appjam.annotation.CurrentUser;
 import me.mocha.appjam.model.entiity.Data;
+import me.mocha.appjam.model.entiity.User;
 import me.mocha.appjam.model.repository.DataRepository;
 import me.mocha.appjam.payload.request.data.SaveDataRequest;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import java.util.Map;
 public class DataController {
 
     private final DataRepository dataRepository;
+    private static final String exampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
     public DataController(DataRepository dataRepository) {
         this.dataRepository = dataRepository;
@@ -46,7 +51,8 @@ public class DataController {
     }
 
     @PostMapping
-    public void saveData(@Valid @RequestBody SaveDataRequest request) {
+    @ApiImplicitParams({@ApiImplicitParam(name = "token", value = "Bearer token", required = true, dataType = "string", paramType = "header", example = "Bearer " + exampleToken)})
+    public void saveData(@CurrentUser User user, @Valid @RequestBody SaveDataRequest request) {
         dataRepository.save(Data.builder()
                 .dust(request.getDust())
                 .humidity(request.getHumidity())
