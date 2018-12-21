@@ -1,6 +1,8 @@
 package me.mocha.appjam.security.jwt;
 
+import io.jsonwebtoken.JwtException;
 import me.mocha.appjam.exception.NotFoundException;
+import me.mocha.appjam.exception.UnprocessableEntityException;
 import me.mocha.appjam.model.repository.UserRepository;
 import me.mocha.appjam.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (Exception e) {
+        } catch (JwtException e) {
             //TODO logging
+            throw new UnprocessableEntityException("unprocessable token");
         }
         filterChain.doFilter(request, response);
     }
