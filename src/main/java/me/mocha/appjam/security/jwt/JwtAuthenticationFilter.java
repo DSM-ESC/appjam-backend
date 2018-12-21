@@ -38,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String header = request.getHeader("Authorization");
             String token = null;
+
             if (StringUtils.hasText(header) && header.startsWith("Bearer")) token = header.replaceFirst("Bearer", "").trim();
             if (StringUtils.hasText(token) && tokenProvider.validToken(token, JwtType.ACCESS)) {
                 String username = tokenProvider.getUsernameFromJwt(token);
@@ -46,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (JwtException e) {
+        } catch (Exception e) {
             //TODO logging
             throw new UnprocessableEntityException("unprocessable token");
         }

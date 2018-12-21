@@ -31,7 +31,7 @@ public class AuthController {
     @PostMapping
     public AuthResponse auth(@RequestBody AuthRequest request) {
         User user = userRepository.findById(request.getUsername()).orElseThrow(() -> new NotFoundException("cannot find user"));
-        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("Incorrect password");
         }
         String access = jwtProvider.generateToken(user.getUsername(), JwtType.ACCESS);
