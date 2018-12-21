@@ -2,6 +2,7 @@ package me.mocha.appjam.controller;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import lombok.extern.slf4j.Slf4j;
 import me.mocha.appjam.annotation.CurrentUser;
 import me.mocha.appjam.model.entiity.Data;
 import me.mocha.appjam.model.entiity.User;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/data")
 public class DataController {
@@ -53,7 +55,7 @@ public class DataController {
     @PostMapping
     @ApiImplicitParams({@ApiImplicitParam(name = "token", value = "Bearer token", required = true, dataType = "string", paramType = "header", example = "Bearer " + exampleToken)})
     public void saveData(@CurrentUser User user, @Valid @RequestBody SaveDataRequest request) {
-        dataRepository.save(Data.builder()
+        Data data = dataRepository.save(Data.builder()
                 .dust(request.getDust())
                 .humidity(request.getHumidity())
                 .temperature(request.getTemperature())
@@ -63,6 +65,7 @@ public class DataController {
                 .hour(request.getHour())
                 .minute(request.getMinute())
                 .build());
+        log.info("save data - {},", data.getId());
     }
 
     @GetMapping("/{year}")

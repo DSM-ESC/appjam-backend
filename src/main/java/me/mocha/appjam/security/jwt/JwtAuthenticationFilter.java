@@ -1,5 +1,6 @@
 package me.mocha.appjam.security.jwt;
 
+import lombok.extern.slf4j.Slf4j;
 import me.mocha.appjam.exception.NotFoundException;
 import me.mocha.appjam.exception.UnprocessableEntityException;
 import me.mocha.appjam.model.repository.UserRepository;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -47,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            //TODO logging
+            log.warn("jwt error - {}", e.getMessage());
             throw new UnprocessableEntityException("unprocessable token");
         }
         filterChain.doFilter(request, response);

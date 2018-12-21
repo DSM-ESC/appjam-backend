@@ -1,5 +1,6 @@
 package me.mocha.appjam.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import me.mocha.appjam.exception.ConflictException;
 import me.mocha.appjam.model.entiity.User;
 import me.mocha.appjam.model.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -29,13 +31,14 @@ public class UserController {
         if (userRepository.existsByUsernameOrNameOrStudentId(request.getUsername(), request.getName(), request.getStudentId())) {
             throw new ConflictException("already exists user");
         }
-        userRepository.save(User.builder()
+        User user = userRepository.save(User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .studentId(request.getStudentId())
                 .role("ROLE_USER")
                 .build());
+        log.info("create user - {}", user.getUsername());
     }
 
 }

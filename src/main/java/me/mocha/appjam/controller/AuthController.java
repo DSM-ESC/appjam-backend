@@ -1,5 +1,6 @@
 package me.mocha.appjam.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import me.mocha.appjam.exception.NotFoundException;
 import me.mocha.appjam.exception.UnauthorizedException;
 import me.mocha.appjam.model.entiity.User;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -36,6 +38,7 @@ public class AuthController {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("Incorrect password");
         }
+        log.info("{} has been authenticated.", user.getUsername());
         String access = jwtProvider.generateToken(user.getUsername(), JwtType.ACCESS);
         String refresh = jwtProvider.generateToken(user.getUsername(), JwtType.REFRESH);
         return new AuthResponse(access, refresh);
