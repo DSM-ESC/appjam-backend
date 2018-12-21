@@ -5,6 +5,7 @@ import me.mocha.appjam.model.repository.DataRepository;
 import me.mocha.appjam.payload.request.data.SaveDataRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class DataController {
     }
 
     @PostMapping
-    public void saveData(@RequestBody SaveDataRequest request) {
+    public void saveData(@Valid @RequestBody SaveDataRequest request) {
         dataRepository.save(Data.builder()
                 .dust(request.getDust())
                 .humidity(request.getHumidity())

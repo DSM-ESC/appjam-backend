@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -29,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping
-    public AuthResponse auth(@RequestBody AuthRequest request) {
+    public AuthResponse auth(@Valid @RequestBody AuthRequest request) {
         User user = userRepository.findById(request.getUsername()).orElseThrow(() -> new NotFoundException("cannot find user"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("Incorrect password");

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -23,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody CreateUserRequest request) {
+    public void createUser(@Valid @RequestBody CreateUserRequest request) {
         if (userRepository.existsByUsernameOrNameOrStudentId(request.getUsername(), request.getName(), request.getStudentId())) {
             throw new ConflictException("already exists user");
         }
