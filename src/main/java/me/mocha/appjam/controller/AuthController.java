@@ -1,7 +1,5 @@
 package me.mocha.appjam.controller;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import me.mocha.appjam.exception.NotFoundException;
 import me.mocha.appjam.exception.UnauthorizedException;
 import me.mocha.appjam.model.entiity.User;
