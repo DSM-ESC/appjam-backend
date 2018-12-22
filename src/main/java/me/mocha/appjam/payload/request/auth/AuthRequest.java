@@ -2,7 +2,6 @@ package me.mocha.appjam.payload.request.auth;
 
 import lombok.*;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -12,11 +11,9 @@ import javax.validation.constraints.NotNull;
 public class AuthRequest {
 
     @NotNull
-    @Min(4)
     private String username;
 
     @NotNull
-    @Min(8)
     private String password;
 
 }
