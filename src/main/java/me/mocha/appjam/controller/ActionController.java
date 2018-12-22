@@ -5,10 +5,10 @@ import me.mocha.appjam.annotation.CurrentUser;
 import me.mocha.appjam.model.entiity.User;
 import me.mocha.appjam.payload.request.action.ApplyActionRequest;
 import me.mocha.appjam.scheduler.JobScheduler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,23 +22,28 @@ public class ActionController {
         //TODO send action to iot server
     }
 
+    @GetMapping
+    public Map<String, Boolean> getStatus() {
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("humidifier", JobScheduler.humidifier);
+        result.put("cleaner", JobScheduler.cleaner);
+        result.put("window", JobScheduler.window);
+        return result;
+    }
+
     private void regulate(int type, boolean power) {
         switch (type) {
             case 1:
-                JobScheduler.window = power;
-                log.info((power ? "open" : "close") + " the window");
+                JobScheduler.humidifier = power;
+                log.info("turn " + (power ? "on" : "off") + " the humidifier");
                 break;
             case 2:
                 JobScheduler.cleaner = power;
                 log.info("turn " + (power ? "on" : "off") + " the cleaner");
                 break;
             case 3:
-                JobScheduler.humidifier = power;
-                log.info("turn " + (power ? "on" : "off") + " the humidifier");
-                break;
-            case 4:
-                JobScheduler.dehumidifier = power;
-                log.info("turn" + (power? "on" : "off") + " the dehumidifier");
+                JobScheduler.window = power;
+                log.info((power ? "open" : "close") + " the window");
                 break;
             default:
                 break;
