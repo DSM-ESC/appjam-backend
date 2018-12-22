@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Map;
 
 @Entity
 @Table(name = "beacon")
@@ -22,6 +21,13 @@ public class Beacon {
 
     @Getter
     @Setter
-    private Map<String, Double> position;
+    private double x;
 
+    @Getter
+    @Setter
+    private double y;
+
+    @Getter
+    @Setter
+    private double z;
 }
