@@ -35,9 +35,9 @@ public class DataController {
     }
 
     @GetMapping("/recent")
-    public Data getRecentData() {
+    public Data getRecentData(@CurrentUser User user) {
         Data recent = null;
-        for (Data data : dataRepository.findAll()) {
+        for (Data data : dataRepository.findAllByUser(user)) {
             if (recent == null) {
                 recent = data;
             } else {
@@ -67,6 +67,7 @@ public class DataController {
                 .day(request.getDay())
                 .hour(request.getHour())
                 .minute(request.getMinute())
+                .user(user)
                 .build());
         log.info("save data - {},", data.getId());
     }

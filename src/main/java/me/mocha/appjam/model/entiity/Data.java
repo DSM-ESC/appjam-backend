@@ -1,5 +1,6 @@
 package me.mocha.appjam.model.entiity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -71,5 +72,11 @@ public class Data {
     @Min(0)
     @Max(59)
     private Integer minute;
+
+    @Getter
+    @Setter
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
 }
