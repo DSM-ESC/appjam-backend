@@ -19,28 +19,26 @@ public class ActionController {
     public void apply(@CurrentUser User user, @RequestBody ApplyActionRequest request) {
         JobScheduler.force = true;
         regulate(request.getType(), request.getPower());
-
         //TODO send action to iot server
-
-        log.info((JobScheduler.window ? "open" : "close") + " the window");
-        log.info("turn " + (JobScheduler.window ? "on" : "off") + " the cleaner");
-        log.info("turn " + (JobScheduler.window ? "on" : "off") + " the humidifier");
-        log.info("turn" + (JobScheduler.window ? "on" : "off") + " the dehumidifier");
     }
 
     private void regulate(int type, boolean power) {
         switch (type) {
             case 1:
                 JobScheduler.window = power;
+                log.info((power ? "open" : "close") + " the window");
                 break;
             case 2:
                 JobScheduler.cleaner = power;
+                log.info("turn " + (power ? "on" : "off") + " the cleaner");
                 break;
             case 3:
                 JobScheduler.humidifier = power;
+                log.info("turn " + (power ? "on" : "off") + " the humidifier");
                 break;
             case 4:
                 JobScheduler.dehumidifier = power;
+                log.info("turn" + (power? "on" : "off") + " the dehumidifier");
                 break;
             default:
                 break;
