@@ -2,6 +2,7 @@ package me.mocha.appjam.model.entiity;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class Beacon {
 
     @Id
+    @Column(length = 100)
     @Getter
     private String uuid;
 
