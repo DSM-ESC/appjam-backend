@@ -55,6 +55,7 @@ public class DataController {
     @PostMapping
     @ApiImplicitParams({@ApiImplicitParam(name = "token", value = "Bearer token", required = true, dataType = "string", paramType = "header", example = "Bearer " + exampleToken)})
     public void saveData(@CurrentUser User user, @Valid @RequestBody SaveDataRequest request) {
+        LocalDateTime now = LocalDateTime.now();
         Data data = dataRepository.save(Data.builder()
                 .dust(request.getDust())
                 .humidity(request.getHumidity())
@@ -62,11 +63,11 @@ public class DataController {
                 .x(request.getX())
                 .y(request.getY())
                 .z(request.getZ())
-                .year(request.getYear())
-                .month(request.getMonth())
-                .day(request.getDay())
-                .hour(request.getHour())
-                .minute(request.getMinute())
+                .year(now.getYear())
+                .month(now.getMonthValue())
+                .day(now.getDayOfMonth())
+                .hour(now.getHour())
+                .minute(now.getMinute())
                 .user(user)
                 .build());
         log.info("save data - {},", data.getId());

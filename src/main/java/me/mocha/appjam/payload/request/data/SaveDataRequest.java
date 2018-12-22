@@ -37,35 +37,5 @@ public class SaveDataRequest {
     @Getter
     @Setter
     private Double z;
-
-    @NotNull
-    @Getter
-    @Min(2018)
-    @Max(2300)
-    private Integer year;
-
-    @NotNull
-    @Getter
-    @Min(1)
-    @Max(12)
-    private Integer month;
-
-    @NotNull
-    @Getter
-    @Min(1)
-    @Max(31)
-    private Integer day;
-
-    @NotNull
-    @Getter
-    @Min(0)
-    @Max(23)
-    private Integer hour;
-
-    @NotNull
-    @Getter
-    @Min(0)
-    @Max(59)
-    private Integer minute;
-
+    
 }
