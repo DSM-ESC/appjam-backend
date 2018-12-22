@@ -18,6 +18,11 @@ import java.util.Map;
 public class JobScheduler {
 
     public static boolean force = false;
+    public static boolean window = false;
+    public static boolean cleaner = false;
+    public static boolean humidifier = false;
+    public static boolean dehumidifier = false;
+
     private final DataRepository dataRepository;
 
     public JobScheduler(DataRepository dataRepository) {
