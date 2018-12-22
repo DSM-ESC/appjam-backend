@@ -1,5 +1,5 @@
 jwt:
   access:
-    exp: 31540000
+    exp: 31540000000
   refresh:
-    exp: 31540000
+    exp: 31540000000
