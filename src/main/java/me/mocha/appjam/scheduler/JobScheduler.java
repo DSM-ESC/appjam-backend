@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,7 @@ public class JobScheduler {
     }
 
     @Scheduled(cron = "0 * * * * *")
-    public void sendJob() {
+    public void sendJob() throws Exception {
         LocalDateTime dateTime = LocalDateTime.now();
         List<Data> data = dataRepository.findAllByYearAndMonthAndDayAndHourAndMinute(
                 dateTime.getYear(),
@@ -38,9 +40,9 @@ public class JobScheduler {
                 dateTime.getHour(),
                 dateTime.getMinute()
         );
-        if (!force) {
+        if (force) {
+        } else {
             Map<String, Double> ave = getAve(data);
-            //TODO: send action to iot server
         }
     }
 
