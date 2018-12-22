@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@Valid @RequestBody CreateUserRequest request) {
+    public void createUser(@Valid @RequestBody CreateUserRequest request) throws ConflictException {
         if (userRepository.existsByUsernameOrNameOrStudentId(request.getUsername(), request.getName(), request.getStudentId())) {
             throw new ConflictException("already exists user");
         }

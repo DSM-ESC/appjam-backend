@@ -33,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping
-    public AuthResponse auth(@Valid @RequestBody AuthRequest request) {
+    public AuthResponse auth(@Valid @RequestBody AuthRequest request) throws NotFoundException {
         User user = userRepository.findById(request.getUsername()).orElseThrow(() -> new NotFoundException("cannot find user"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("Incorrect password");
