@@ -26,6 +26,18 @@ public class SaveDataRequest {
     @Max(100)
     private Double temperature;
 
+    @Getter
+    @Setter
+    private Double x;
+
+    @Getter
+    @Setter
+    private Double y;
+
+    @Getter
+    @Setter
+    private Double z;
+
     @NotNull
     @Getter
     @Min(2018)

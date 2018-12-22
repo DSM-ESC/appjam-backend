@@ -8,6 +8,8 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "data")
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Data {
 
@@ -34,6 +36,18 @@ public class Data {
     private Double temperature;
 
     @Getter
+    @Setter
+    private Double x;
+
+    @Getter
+    @Setter
+    private Double y;
+
+    @Getter
+    @Setter
+    private Double z;
+
+    @Getter
     @Min(2018)
     @Max(2300)
     private Integer year;
@@ -57,17 +71,5 @@ public class Data {
     @Min(0)
     @Max(59)
     private Integer minute;
-
-    @Builder
-    public Data(double dust, double humidity, double temperature, int year, int month, int day, int hour, int minute) {
-        this.dust = dust;
-        this.humidity = humidity;
-        this.temperature = temperature;
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.hour = hour;
-        this.minute = minute;
-    }
 
 }
