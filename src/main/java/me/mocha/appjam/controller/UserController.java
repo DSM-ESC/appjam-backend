@@ -1,15 +1,13 @@
 package me.mocha.appjam.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import me.mocha.appjam.annotation.CurrentUser;
 import me.mocha.appjam.exception.ConflictException;
 import me.mocha.appjam.model.entiity.User;
 import me.mocha.appjam.model.repository.UserRepository;
 import me.mocha.appjam.payload.request.user.CreateUserRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -39,6 +37,11 @@ public class UserController {
                 .role("ROLE_USER")
                 .build());
         log.info("create user - {}", user.getUsername());
+    }
+
+    @GetMapping
+    public User getInfo(@CurrentUser User user) {
+        return user;
     }
 
 }
