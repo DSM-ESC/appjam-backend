@@ -19,19 +19,19 @@ public class Data {
     @Getter
     @Setter
     @Min(0)
-    private Integer dust;
+    private Double dust;
 
     @Getter
     @Setter
     @Min(0)
     @Max(100)
-    private Integer humidity;
+    private Double humidity;
 
     @Getter
     @Setter
     @Min(-100)
     @Max(100)
-    private Integer temperature;
+    private Double temperature;
 
     @Getter
     @Min(2018)
@@ -59,7 +59,7 @@ public class Data {
     private Integer minute;
 
     @Builder
-    public Data(int dust, int humidity, int temperature, int year, int month, int day, int hour, int minute) {
+    public Data(double dust, double humidity, double temperature, int year, int month, int day, int hour, int minute) {
         this.dust = dust;
         this.humidity = humidity;
         this.temperature = temperature;

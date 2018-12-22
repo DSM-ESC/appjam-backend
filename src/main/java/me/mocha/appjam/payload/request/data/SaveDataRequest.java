@@ -14,17 +14,17 @@ public class SaveDataRequest {
 
     @NotNull
     @Min(0)
-    private Integer dust;
+    private Double dust;
 
     @NotNull
     @Min(0)
     @Max(100)
-    private Integer humidity;
+    private Double humidity;
 
     @NotNull
     @Min(-100)
     @Max(100)
-    private Integer temperature;
+    private Double temperature;
 
     @NotNull
     @Getter

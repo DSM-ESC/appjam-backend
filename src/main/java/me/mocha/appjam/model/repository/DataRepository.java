@@ -10,4 +10,5 @@ public interface DataRepository extends JpaRepository<Data, Long> {
     List<Data> findAllByYearAndMonth(int year, int month);
     List<Data> findAllByYearAndMonthAndDay(int year, int month, int day);
     List<Data> findAllByYearAndMonthAndDayAndHour(int year, int month, int day, int hour);
+    List<Data> findAllByYearAndMonthAndDayAndHourAndMinute(int year, int month, int day, int hour, int minute);
 }
